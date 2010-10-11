@@ -39,6 +39,9 @@
 	// bring handle to front
 	[self.superview bringSubviewToFront:self];
 	
+	// set new cursor
+	[[NSCursor closedHandCursor] push];
+	
 	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	
 	NSRect bounds = self.superview.bounds;
@@ -71,8 +74,14 @@
 		
 		point = currentPoint;
 	}
+	
+	[[NSCursor closedHandCursor] pop];
 }
 
+- (void) resetCursorRects {
+    [super resetCursorRects];
+    [self addCursorRect:self.bounds cursor:[NSCursor openHandCursor]];
+}
 
 @end
 
