@@ -29,7 +29,7 @@
 
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
-	[[NSColor lightGrayColor] set];
+	[[NSColor whiteColor] set];
 	NSRectFill(self.bounds);
 	[[NSColor blackColor] set];
 	NSFrameRect(self.bounds);
@@ -45,8 +45,20 @@
 	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	
 	NSRect bounds = self.superview.bounds;
+	BOOL firstMove = YES;
 	while ([event type]!=NSLeftMouseUp) {
 		event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+		
+		// hide handle on move
+		if (firstMove) {
+			for (NSView *subview in self.superview.subviews) {
+				if ([subview isKindOfClass:[HandleView class]]) {
+					[subview setHidden:YES];
+				}
+			}
+			firstMove = NO;
+		}
+		
 		NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 		currentPoint.x = fminf(fmaxf(currentPoint.x, bounds.origin.x), bounds.size.width);
 		currentPoint.y = fminf(fmaxf(currentPoint.y, bounds.origin.y), bounds.size.height);
@@ -75,7 +87,15 @@
 		point = currentPoint;
 	}
 	
+	// restore cursor
 	[[NSCursor closedHandCursor] pop];
+	
+	// make handle visible again
+	for (NSView *subview in self.superview.subviews) {
+		if ([subview isKindOfClass:[HandleView class]]) {
+			[subview setHidden:NO];
+		}
+	}
 }
 
 - (void) resetCursorRects {
