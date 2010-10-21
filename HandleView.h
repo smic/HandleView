@@ -10,25 +10,26 @@
 
 @class HandleView;
 
-@protocol HandleViewDelegate
+@protocol HandleViewDelegate <NSObject>
 
 @optional
-- (void)handleView:(HandleView*)handleView willChangePoint:(NSPoint)point;
-- (void)handleView:(HandleView*)handleView didChangePoint:(NSPoint)point;
+- (BOOL)handleView:(HandleView*)handleView shouldChangePosition:(NSPoint)position;
+- (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position;
+- (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position;
 
 @end
 
 
 @interface HandleView : NSView {
-	NSPoint mPoint;
-	id/*<HandleViewDelegate>*/ mDelegate;
+	NSPoint mPosition;
+	id<HandleViewDelegate> mDelegate;
 }
 
-@property (nonatomic, assign) NSPoint point;
+@property (nonatomic, assign) NSPoint position;
 @property (nonatomic, assign) id<HandleViewDelegate> delegate;
 
-- (id)initWitPoint:(NSPoint)point;
-+ (HandleView*)handleVewWitPoint:(NSPoint)point;
+- (id)initWithPosition:(NSPoint)point;
++ (HandleView*)handleViewWithPosition:(NSPoint)point;
 
 @end
 

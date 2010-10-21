@@ -12,19 +12,19 @@
 
 @implementation HandleView
 
-@synthesize point = mPoint, delegate = mDelegate;
+@synthesize position = mPosition, delegate = mDelegate;
 
-- (id)initWitPoint:(NSPoint)point {
-    self = [super initWithFrame:NSInsetRect(NSMakeRect(point.x, point.y, 0, 0), -HandleSize, -HandleSize)];
+- (id)initWithPosition:(NSPoint)position {
+    self = [super initWithFrame:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize, -HandleSize)];
     if (self) {
         // Initialization code here.
-		mPoint = point;
+		mPosition = position;
     }
     return self;
 }
 
-+ (HandleView*)handleVewWitPoint:(NSPoint)point {
-	return [[[HandleView alloc] initWitPoint:point] autorelease];
++ (HandleView*)handleViewWithPosition:(NSPoint)position {
+	return [[[HandleView alloc] initWithPosition:position] autorelease];
 }
 
 - (void)drawRect:(NSRect)rect {
@@ -36,12 +36,21 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
+	
+	// test the if the position should be changed
+	if ([mDelegate respondsToSelector:@selector(handleView:shouldChangePosition:)]) {
+		if (![mDelegate handleView:self shouldChangePosition:mPosition]) {
+			return;
+		}
+	}
+	
 	// bring handle to front
 	[self.superview bringSubviewToFront:self];
 	
 	// set new cursor
 	[[NSCursor closedHandCursor] push];
 	
+	// current position of the mouse pointer
 	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	
 	NSRect bounds = self.superview.bounds;
@@ -66,23 +75,23 @@
 		// NSLog(@"point=%@", NSStringFromPoint(point));
 		// NSLog(@"currentPoint=%@", NSStringFromPoint(currentPoint));
 		
-		NSPoint newPoint = NSMakePoint(mPoint.x + currentPoint.x - point.x,
-									   mPoint.y + currentPoint.y - point.y);
+		NSPoint newPosition = NSMakePoint(mPosition.x + currentPoint.x - point.x,
+										  mPosition.y + currentPoint.y - point.y);
 		
-		if ([mDelegate respondsToSelector:@selector(handleView:willChangePoint:)]) {
-			[mDelegate handleView:self willChangePoint:newPoint];
+		if ([mDelegate respondsToSelector:@selector(handleView:willChangePosition:)]) {
+			newPosition = [mDelegate handleView:self willChangePosition:newPosition];
 		}
 //		mPoint.x += currentPoint.x - point.x;
 //		mPoint.y += currentPoint.y - point.y;
-		mPoint = newPoint;
+		mPosition = newPosition;
 		
-		if ([mDelegate respondsToSelector:@selector(handleView:didChangePoint:)]) {
-			[mDelegate handleView:self didChangePoint:newPoint];
+		if ([mDelegate respondsToSelector:@selector(handleView:didChangePosition:)]) {
+			[mDelegate handleView:self didChangePosition:newPosition];
 		}
 		
 		// NSLog(@"mPoint=%@", NSStringFromPoint(mPoint));
 		
-		self.frame = NSInsetRect(NSMakeRect(mPoint.x, mPoint.y, 0, 0), -HandleSize, -HandleSize);
+		self.frame = NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize, -HandleSize);
 		
 		point = currentPoint;
 	}

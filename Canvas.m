@@ -10,6 +10,15 @@
 #import "HandleView.h"
 
 
+CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
+	if (value > max)
+		return max;
+	else if (value < min)
+		return min;
+		
+	return value;
+}
+
 @implementation Canvas
 
 - (id)initWithFrame:(NSRect)frame {
@@ -21,16 +30,22 @@
 }
 
 - (void)awakeFromNib {
-	handleView1 = [[HandleView handleVewWitPoint:NSMakePoint(100, 100)] retain];
+	handleView1 = [[HandleView handleViewWithPosition:NSMakePoint(100, 100)] retain];
 	handleView1.delegate = self;
 	[self addSubview:handleView1];
 	
-	handleView2 = [[HandleView handleVewWitPoint:NSMakePoint(200, 150)] retain];
+	handleView2 = [[HandleView handleViewWithPosition:NSMakePoint(200, 150)] retain];
 	handleView2.delegate = self;
 	[self addSubview:handleView2];
 }
 
-- (void)handleView:(HandleView*)handleView didChangePoint:(NSPoint)point {
+- (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position {
+	CGRect rect = NSRectToCGRect(self.bounds);
+	return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
+					   CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
+}
+
+- (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position {
 	[self setNeedsDisplay:YES];
 }
 
@@ -40,7 +55,7 @@
 	NSRectFill(self.bounds);
 	
 	[[NSColor blackColor] set];
-	[NSBezierPath strokeLineFromPoint:handleView1.point toPoint:handleView2.point];
+	[NSBezierPath strokeLineFromPoint:handleView1.position toPoint:handleView2.position];
 }
 
 @end
