@@ -8,17 +8,20 @@
 
 #import "HandleView.h"
 
-#define HandleSize 4
+#define HandleSize 4.0f
+#define HandlePadding 1.0f 
 
 @implementation HandleView
 
 @synthesize position = mPosition, delegate = mDelegate;
 
-- (id)initWithPosition:(NSPoint)position {
-    self = [super initWithFrame:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize, -HandleSize)];
+- (id)initWithPosition:(NSPoint)position {	
+    self = [super initWithFrame:NSMakeRect(0, 0, -HandleSize, -HandleSize)];
     if (self) {
         // Initialization code here.
 		mPosition = position;
+		
+		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
     }
     return self;
 }
@@ -107,7 +110,8 @@
 		
 		// NSLog(@"mPoint=%@", NSStringFromPoint(mPoint));
 		
-		self.frame = NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize, -HandleSize);
+		//self.frame = NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize, -HandleSize);
+		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
 		
 		point = currentPoint;
 	}
@@ -145,6 +149,16 @@ int bringToFront(id itemA, id itemB, void *target) {
 
 - (void)bringSubviewToFront:(NSView *)subview {
     [self sortSubviewsUsingFunction:bringToFront context:subview];
+}
+
+- (NSRect)alignRectToBase:(NSRect)rect {
+	NSRect newRect = [self convertRectToBase:rect];
+	newRect.origin.x = floor(newRect.origin.x);
+	newRect.origin.y = floor(newRect.origin.y);
+	newRect.size.width = floor(newRect.size.width);
+	newRect.size.height = floor(newRect.size.height);
+	newRect = [self convertRectFromBase:newRect];
+	return newRect;
 }
 
 

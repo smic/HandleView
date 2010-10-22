@@ -36,6 +36,7 @@
 @interface NSView (HandleViewAdditions)
 
 - (void)bringSubviewToFront:(NSView *)subview;
+- (NSRect)alignRectToBase:(NSRect)rect;
 
 @end
 
