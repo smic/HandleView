@@ -41,9 +41,11 @@
 	
 	CGContextSetAllowsAntialiasing(context, NO);
 	
+	// fill background
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
 	CGContextFillRect(context, bounds);
 	
+	// stroke frame
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
 	CGContextStrokeRect(context, bounds);
 	
@@ -78,35 +80,34 @@
 	[[NSCursor closedHandCursor] push];
 	
 	// current position of the mouse pointer
-	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
+	NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
+	NSPoint relativePoint = NSMakePoint(mPosition.x - currentPoint.x, mPosition.y - currentPoint.y);
 	
+	// waiting for dragging events
 	while ([event type]!=NSLeftMouseUp) {
 		event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
 		
-		NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
+		// current position of the mouse pointer
+		currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 		
-		/*NSPoint newPosition = NSMakePoint(mPosition.x + currentPoint.x - point.x,
-										  mPosition.y + currentPoint.y - point.y);*/
-		NSPoint newPosition = NSMakePoint(currentPoint.x,
-										  currentPoint.y);
+		NSPoint newPosition = NSMakePoint(currentPoint.x + relativePoint.x,
+										  currentPoint.y + relativePoint.y);
 		
+		// will change position
 		if ([mDelegate respondsToSelector:@selector(handleView:willChangePosition:)]) {
 			newPosition = [mDelegate handleView:self willChangePosition:newPosition];
 		}
-//		mPoint.x += currentPoint.x - point.x;
-//		mPoint.y += currentPoint.y - point.y;
+		
+		// set new position
 		mPosition = newPosition;
 		
+		// did change position
 		if ([mDelegate respondsToSelector:@selector(handleView:didChangePosition:)]) {
 			[mDelegate handleView:self didChangePosition:newPosition];
 		}
 		
-		// NSLog(@"mPoint=%@", NSStringFromPoint(mPoint));
-		
-		//self.frame = NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize, -HandleSize);
+		// set frame for new position
 		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
-		
-		point = currentPoint;
 	}
 	
 	// restore cursor
@@ -118,6 +119,7 @@
 	}
 }
 
+// "OpenHand" as standard mouse cursor
 - (void) resetCursorRects {
     [super resetCursorRects];
     [self addCursorRect:self.bounds cursor:[NSCursor openHandCursor]];
