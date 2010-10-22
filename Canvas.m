@@ -39,7 +39,15 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	[self addSubview:handleView2];
 }
 
+- (void)handleView:(HandleView*)handleView didBeginMoving:(NSPoint)position {
+	// make handles visible again
+	[handleView1 setHidden:YES];
+	[handleView2 setHidden:YES];
+}
+
 - (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position {
+	
+	
     if (handleView1 == handleView) {
         NSPoint center = NSMakePoint(100, 100);
         CGFloat dx = position.x - center.x;
@@ -60,6 +68,12 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 - (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position {
 	[self setNeedsDisplay:YES];
+}
+
+- (void)handleView:(HandleView*)handleView didEndMoving:(NSPoint)position {
+	// show handles on move
+	[handleView1 setHidden:NO];
+	[handleView2 setHidden:NO];
 }
 
 - (void)drawRect:(NSRect)rect {

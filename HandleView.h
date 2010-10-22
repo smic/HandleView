@@ -13,9 +13,11 @@
 @protocol HandleViewDelegate <NSObject>
 
 @optional
+- (void)handleView:(HandleView*)handleView didBeginMoving:(NSPoint)position;
 - (BOOL)handleView:(HandleView*)handleView shouldChangePosition:(NSPoint)position;
 - (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position;
 - (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position;
+- (void)handleView:(HandleView*)handleView didEndMoving:(NSPoint)position;
 
 @end
 

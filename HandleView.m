@@ -54,9 +54,19 @@
 
 - (void)mouseDown:(NSEvent *)event {
 	
+	// begin moving
+	if ([mDelegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
+		[mDelegate handleView:self didBeginMoving:mPosition];
+	}
+	
 	// test the if the position should be changed
 	if ([mDelegate respondsToSelector:@selector(handleView:shouldChangePosition:)]) {
 		if (![mDelegate handleView:self shouldChangePosition:mPosition]) {
+			
+			// end moving
+			if ([mDelegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
+				[mDelegate handleView:self didEndMoving:mPosition];
+			}
 			return;
 		}
 	}
@@ -70,27 +80,10 @@
 	// current position of the mouse pointer
 	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	
-	//NSRect bounds = self.superview.bounds;
-	//BOOL firstMove = YES;
 	while ([event type]!=NSLeftMouseUp) {
 		event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
 		
-		// hide handle on move
-		/*if (firstMove) {
-			for (NSView *subview in self.superview.subviews) {
-				if ([subview isKindOfClass:[HandleView class]]) {
-					[subview setHidden:YES];
-				}
-			}
-			firstMove = NO;
-		}*/
-		
 		NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
-		//currentPoint.x = fminf(fmaxf(currentPoint.x, bounds.origin.x), bounds.size.width);
-		//currentPoint.y = fminf(fmaxf(currentPoint.y, bounds.origin.y), bounds.size.height);
-		
-		// NSLog(@"point=%@", NSStringFromPoint(point));
-		// NSLog(@"currentPoint=%@", NSStringFromPoint(currentPoint));
 		
 		/*NSPoint newPosition = NSMakePoint(mPosition.x + currentPoint.x - point.x,
 										  mPosition.y + currentPoint.y - point.y);*/
@@ -119,12 +112,10 @@
 	// restore cursor
 	[[NSCursor closedHandCursor] pop];
 	
-	// make handle visible again
-	/*for (NSView *subview in self.superview.subviews) {
-		if ([subview isKindOfClass:[HandleView class]]) {
-			[subview setHidden:NO];
-		}
-	}*/
+	// end moving
+	if ([mDelegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
+		[mDelegate handleView:self didEndMoving:mPosition];
+	}
 }
 
 - (void) resetCursorRects {
