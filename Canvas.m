@@ -2,9 +2,6 @@
 //  Canvas.m
 //  HandleView
 //
-//  Created by Stephan Michels on 11.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
-//
 
 #import "Canvas.h"
 #import "HandleView.h"
