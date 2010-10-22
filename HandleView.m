@@ -53,30 +53,32 @@
 	// current position of the mouse pointer
 	NSPoint point = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	
-	NSRect bounds = self.superview.bounds;
-	BOOL firstMove = YES;
+	//NSRect bounds = self.superview.bounds;
+	//BOOL firstMove = YES;
 	while ([event type]!=NSLeftMouseUp) {
 		event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
 		
 		// hide handle on move
-		if (firstMove) {
+		/*if (firstMove) {
 			for (NSView *subview in self.superview.subviews) {
 				if ([subview isKindOfClass:[HandleView class]]) {
 					[subview setHidden:YES];
 				}
 			}
 			firstMove = NO;
-		}
+		}*/
 		
 		NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
-		currentPoint.x = fminf(fmaxf(currentPoint.x, bounds.origin.x), bounds.size.width);
-		currentPoint.y = fminf(fmaxf(currentPoint.y, bounds.origin.y), bounds.size.height);
+		//currentPoint.x = fminf(fmaxf(currentPoint.x, bounds.origin.x), bounds.size.width);
+		//currentPoint.y = fminf(fmaxf(currentPoint.y, bounds.origin.y), bounds.size.height);
 		
 		// NSLog(@"point=%@", NSStringFromPoint(point));
 		// NSLog(@"currentPoint=%@", NSStringFromPoint(currentPoint));
 		
-		NSPoint newPosition = NSMakePoint(mPosition.x + currentPoint.x - point.x,
-										  mPosition.y + currentPoint.y - point.y);
+		/*NSPoint newPosition = NSMakePoint(mPosition.x + currentPoint.x - point.x,
+										  mPosition.y + currentPoint.y - point.y);*/
+		NSPoint newPosition = NSMakePoint(currentPoint.x,
+										  currentPoint.y);
 		
 		if ([mDelegate respondsToSelector:@selector(handleView:willChangePosition:)]) {
 			newPosition = [mDelegate handleView:self willChangePosition:newPosition];
@@ -100,11 +102,11 @@
 	[[NSCursor closedHandCursor] pop];
 	
 	// make handle visible again
-	for (NSView *subview in self.superview.subviews) {
+	/*for (NSView *subview in self.superview.subviews) {
 		if ([subview isKindOfClass:[HandleView class]]) {
 			[subview setHidden:NO];
 		}
-	}
+	}*/
 }
 
 - (void) resetCursorRects {
