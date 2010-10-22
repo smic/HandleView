@@ -29,10 +29,24 @@
 
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
-	[[NSColor whiteColor] set];
-	NSRectFill(self.bounds);
-	[[NSColor blackColor] set];
-	NSFrameRect(self.bounds);
+	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+	
+	CGRect bounds = NSRectToCGRect(self.bounds);
+	bounds = CGRectInset(bounds, HandlePadding, HandlePadding); 
+	
+	CGContextSaveGState(context);
+	
+	CGContextSetAllowsAntialiasing(context, NO);
+	
+	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
+	CGContextFillRect(context, bounds);
+	
+	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
+	CGContextStrokeRect(context, bounds);
+	
+	CGContextSetAllowsAntialiasing(context, YES);
+	
+	CGContextRestoreGState(context);
 }
 
 - (void)mouseDown:(NSEvent *)event {
