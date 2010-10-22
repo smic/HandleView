@@ -55,6 +55,7 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
         return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
                            CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
     }
+	return position;
 }
 
 - (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position {
@@ -63,15 +64,20 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
-	[[NSColor redColor] set];
-	NSRectFill(self.bounds);
+	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
 	
-	[[NSColor blackColor] set];
+	CGContextSaveGState(context);
 	
-	NSBezierPath *circlePath = [NSBezierPath bezierPathWithOvalInRect:NSMakeRect(50, 50, 100, 100)];
-	[circlePath stroke];
+	CGContextSetGrayFillColor(context, 0.7f, 1.0f);
+	CGContextFillRect(context, NSRectToCGRect(self.bounds));
 	
-	[NSBezierPath strokeLineFromPoint:handleView1.position toPoint:handleView2.position];
+	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
+	CGContextStrokeEllipseInRect(context, CGRectMake(50, 50, 100, 100));
+	
+	CGPoint points[] = {NSPointToCGPoint(handleView1.position), NSPointToCGPoint(handleView2.position)};
+	CGContextStrokeLineSegments(context, points, 2);
+	
+	CGContextRestoreGState(context);
 }
 
 @end
