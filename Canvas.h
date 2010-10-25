@@ -9,6 +9,8 @@
 @interface Canvas : NSView <HandleViewDelegate> {
 	HandleView *handleView1;
 	HandleView *handleView2;
+	
+	NSMutableArray *mGraphics;
 }
 
 @end

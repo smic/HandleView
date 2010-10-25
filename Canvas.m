@@ -5,6 +5,8 @@
 
 #import "Canvas.h"
 #import "HandleView.h"
+#import "EllipseGraphic.h"
+#import "EllipseGraphicView.h"
 
 
 CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
@@ -34,6 +36,15 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	handleView2 = [[HandleView handleViewWithPosition:NSMakePoint(300, 150)] retain];
 	handleView2.delegate = self;
 	[self addSubview:handleView2];
+	
+	mGraphics = [[NSMutableArray alloc] init];
+	
+	EllipseGraphic *graphic = [EllipseGraphic ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
+	[mGraphics addObject:graphic];
+	
+	EllipseGraphicView *graphicView = [[EllipseGraphicView alloc] initWithGraphic:graphic];
+	[self addSubview:graphicView];
+	[graphicView release];
 }
 
 - (void)handleView:(HandleView*)handleView didBeginMoving:(NSPoint)position {
@@ -89,6 +100,15 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	CGContextStrokeLineSegments(context, points, 2);
 	
 	CGContextRestoreGState(context);
+}
+
+- (void)dealloc {
+	[handleView1 release];
+	[handleView2 release];
+	
+	[mGraphics release];
+	
+	[super dealloc];
 }
 
 @end

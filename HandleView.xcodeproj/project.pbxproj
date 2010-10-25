@@ -13,6 +13,8 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D40035731262F8380082F08D /* HandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035721262F8380082F08D /* HandleView.m */; };
 		D40035951262FB250082F08D /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035941262FB250082F08D /* Canvas.m */; };
+		D48A712A1275601300425A67 /* EllipseGraphicView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A71291275601300425A67 /* EllipseGraphicView.m */; };
+		D48A712E1275606000425A67 /* EllipseGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A712D1275606000425A67 /* EllipseGraphic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,10 @@
 		D40035721262F8380082F08D /* HandleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleView.m; sourceTree = "<group>"; };
 		D40035931262FB250082F08D /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
 		D40035941262FB250082F08D /* Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Canvas.m; sourceTree = "<group>"; };
+		D48A71281275601300425A67 /* EllipseGraphicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseGraphicView.h; sourceTree = "<group>"; };
+		D48A71291275601300425A67 /* EllipseGraphicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EllipseGraphicView.m; sourceTree = "<group>"; };
+		D48A712C1275606000425A67 /* EllipseGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseGraphic.h; sourceTree = "<group>"; };
+		D48A712D1275606000425A67 /* EllipseGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EllipseGraphic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,10 +53,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D48A712B1275604C00425A67 /* Model */,
 				D40035711262F8380082F08D /* HandleView.h */,
 				D40035721262F8380082F08D /* HandleView.m */,
 				D40035931262FB250082F08D /* Canvas.h */,
 				D40035941262FB250082F08D /* Canvas.m */,
+				D48A71281275601300425A67 /* EllipseGraphicView.h */,
+				D48A71291275601300425A67 /* EllipseGraphicView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -121,6 +130,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D48A712B1275604C00425A67 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D48A712C1275606000425A67 /* EllipseGraphic.h */,
+				D48A712D1275606000425A67 /* EllipseGraphic.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -179,6 +197,8 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				D40035731262F8380082F08D /* HandleView.m in Sources */,
 				D40035951262FB250082F08D /* Canvas.m in Sources */,
+				D48A712A1275601300425A67 /* EllipseGraphicView.m in Sources */,
+				D48A712E1275606000425A67 /* EllipseGraphic.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
