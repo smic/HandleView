@@ -19,6 +19,8 @@
 		mPosition = position;
 		
 		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
+		
+		[self addObserver:self forKeyPath:@"position" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
     }
     return self;
 }
@@ -116,10 +118,28 @@
 	}
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+	if([keyPath isEqualToString:@"position"]) {
+		// set frame for new position
+		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
+	}
+}
+
+
 // "OpenHand" as standard mouse cursor
 - (void) resetCursorRects {
     [super resetCursorRects];
     [self addCursorRect:self.bounds cursor:[NSCursor openHandCursor]];
+}
+
+- (void)dealloc {
+	[self removeObserver:self forKeyPath:@"position"];
+	
+	[super dealloc];
 }
 
 @end
