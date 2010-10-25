@@ -55,8 +55,6 @@ const CGFloat padding = 10.0f;
 	graphicBounds.origin.x -= self.frame.origin.x;
 	graphicBounds.origin.y -= self.frame.origin.y;
 	
-	NSLog(@"graphic = %@", NSStringFromRect(NSRectFromCGRect(graphicBounds)));
-	
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
 	CGContextStrokeEllipseInRect(context, graphicBounds);
 	
