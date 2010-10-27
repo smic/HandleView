@@ -33,11 +33,13 @@ const CGFloat padding = 10.0f;
 		
 		mHandleView2 = [[HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x + self.graphic.size.width / 2.0f, 
 																	  self.graphic.center.y - self.frame.origin.y)] retain];
+		mHandleView2.type = kHandleTypeSpecial;
 		mHandleView2.delegate = self;
 		[self addSubview:mHandleView2];
 		
 		mHandleView3 = [[HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
 																	   self.graphic.center.y - self.frame.origin.y + self.graphic.size.height / 2.0f)] retain];
+		mHandleView3.type = kHandleTypeSpecial;
 		mHandleView3.delegate = self;
 		[self addSubview:mHandleView3];
     }

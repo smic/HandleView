@@ -10,13 +10,13 @@
 
 @implementation HandleView
 
-@synthesize position = mPosition, delegate = mDelegate;
+@synthesize position = mPosition, type = mType, delegate = mDelegate;
 
 - (id)initWithPosition:(NSPoint)position {	
     self = [super initWithFrame:NSMakeRect(0, 0, -HandleSize, -HandleSize)];
     if (self) {
         // Initialization code here.
-		mPosition = position;
+		self.position = position;
 		
 		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
 		
@@ -38,17 +38,25 @@
 	
 	CGContextSaveGState(context);
 	
-	CGContextSetAllowsAntialiasing(context, NO);
-	
-	// fill background
 	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
-	CGContextFillRect(context, bounds);
-	
-	// stroke frame
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
-	CGContextStrokeRect(context, bounds);
 	
-	CGContextSetAllowsAntialiasing(context, YES);
+	if (self.type == kHandleTypeNormal) {
+		CGContextSetAllowsAntialiasing(context, NO);
+	
+		// fill background
+		CGContextFillRect(context, bounds);
+	
+		// stroke frame
+		CGContextStrokeRect(context, bounds);
+	
+		CGContextSetAllowsAntialiasing(context, YES);
+	} else if (self.type == kHandleTypeSpecial) {
+		CGContextBeginPath(context);
+		CGContextAddEllipseInRect(context, bounds);
+		
+		CGContextDrawPath(context, kCGPathFillStroke);
+	}
 	
 	CGContextRestoreGState(context);
 }

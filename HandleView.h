@@ -18,13 +18,19 @@
 
 @end
 
+typedef enum _HandleType {
+	kHandleTypeNormal = 0,
+	kHandleTypeSpecial = 1
+} HandleType;
 
 @interface HandleView : NSView {
 	NSPoint mPosition;
+	HandleType mType;
 	id<HandleViewDelegate> mDelegate;
 }
 
 @property (nonatomic, assign) NSPoint position;
+@property (nonatomic, assign) HandleType type;
 @property (nonatomic, assign) id<HandleViewDelegate> delegate;
 
 - (id)initWithPosition:(NSPoint)point;
