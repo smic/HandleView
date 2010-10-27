@@ -15,6 +15,7 @@
 		D40035951262FB250082F08D /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035941262FB250082F08D /* Canvas.m */; };
 		D48A712A1275601300425A67 /* EllipseGraphicView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A71291275601300425A67 /* EllipseGraphicView.m */; };
 		D48A712E1275606000425A67 /* EllipseGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A712D1275606000425A67 /* EllipseGraphic.m */; };
+		D48A7436127810BC00425A67 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A7435127810BC00425A67 /* NSColor+CGColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,8 @@
 		D48A71291275601300425A67 /* EllipseGraphicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EllipseGraphicView.m; sourceTree = "<group>"; };
 		D48A712C1275606000425A67 /* EllipseGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseGraphic.h; sourceTree = "<group>"; };
 		D48A712D1275606000425A67 /* EllipseGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EllipseGraphic.m; sourceTree = "<group>"; };
+		D48A7434127810BC00425A67 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
+		D48A7435127810BC00425A67 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 				D40035941262FB250082F08D /* Canvas.m */,
 				D48A71281275601300425A67 /* EllipseGraphicView.h */,
 				D48A71291275601300425A67 /* EllipseGraphicView.m */,
+				D48A7434127810BC00425A67 /* NSColor+CGColor.h */,
+				D48A7435127810BC00425A67 /* NSColor+CGColor.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 				D40035951262FB250082F08D /* Canvas.m in Sources */,
 				D48A712A1275601300425A67 /* EllipseGraphicView.m in Sources */,
 				D48A712E1275606000425A67 /* EllipseGraphic.m in Sources */,
+				D48A7436127810BC00425A67 /* NSColor+CGColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

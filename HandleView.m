@@ -4,19 +4,22 @@
 //
 
 #import "HandleView.h"
+#import "NSColor+CGColor.h"
 
 #define HandleSize 4.0f
 #define HandlePadding 1.0f 
 
 @implementation HandleView
 
-@synthesize position = mPosition, type = mType, delegate = mDelegate;
+@synthesize position = mPosition, type = mType, color = mColor, delegate = mDelegate;
 
 - (id)initWithPosition:(NSPoint)position {	
     self = [super initWithFrame:NSMakeRect(0, 0, -HandleSize, -HandleSize)];
     if (self) {
         // Initialization code here.
 		self.position = position;
+		self.type = kHandleTypeNormal;
+		self.color = [NSColor whiteColor];
 		
 		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
 		
@@ -38,7 +41,11 @@
 	
 	CGContextSaveGState(context);
 	
-	CGContextSetGrayFillColor(context, 1.0f, 1.0f);
+	CGColorRef fillColor = [self.color createCGColor];
+	CGContextSetFillColorWithColor(context, fillColor);
+	CGColorRelease(fillColor);
+	
+	//CGContextSetGrayFillColor(context, 1.0f, 1.0f);
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
 	
 	if (self.type == kHandleTypeNormal) {
