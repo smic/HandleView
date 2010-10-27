@@ -7,20 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "EllipseGraphic.h"
+#import "Ellipse.h"
 #import "HandleView.h"
 
 
-@interface EllipseGraphicView : NSView <HandleViewDelegate> {
-	EllipseGraphic *mGraphic;
+@interface EllipseView : NSView <HandleViewDelegate> {
+	Ellipse *mGraphic;
 	
 	HandleView *mHandleView1;
 	HandleView *mHandleView2;
 	HandleView *mHandleView3;
 }
 
-@property (nonatomic, retain) EllipseGraphic *graphic;
+@property (nonatomic, retain) Ellipse *graphic;
 
-- (id)initWithGraphic:(EllipseGraphic*)graphic;
+- (id)initWithGraphic:(Ellipse*)graphic;
 
 @end

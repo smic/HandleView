@@ -6,10 +6,10 @@
 //  Copyright 2010 Beilstein Institut. All rights reserved.
 //
 
-#import "EllipseGraphic.h"
+#import "Ellipse.h"
 
 
-@implementation EllipseGraphic
+@implementation Ellipse
 
 @synthesize center = mCenter, size = mSize;
 
@@ -22,8 +22,8 @@
 	return self;
 }
 
-+ (EllipseGraphic*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
-	return [[[EllipseGraphic alloc] initWithCenter:center size:size] autorelease];
++ (Ellipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
+	return [[[Ellipse alloc] initWithCenter:center size:size] autorelease];
 }
 
 - (CGRect)bounds {

@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface EllipseGraphic : NSObject {
+@interface Ellipse : NSObject {
 	CGPoint mCenter;
 	CGSize mSize;
 }
@@ -21,6 +21,6 @@
 
 - (id)initWithCenter:(CGPoint)center size:(CGSize)size;
 
-+ (EllipseGraphic*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size;
++ (Ellipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size;
 
 @end

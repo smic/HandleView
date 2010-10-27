@@ -5,8 +5,8 @@
 
 #import "Canvas.h"
 #import "HandleView.h"
-#import "EllipseGraphic.h"
-#import "EllipseGraphicView.h"
+#import "Ellipse.h"
+#import "EllipseView.h"
 
 
 CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
@@ -39,10 +39,10 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	
 	mGraphics = [[NSMutableArray alloc] init];
 	
-	EllipseGraphic *graphic = [EllipseGraphic ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
+	Ellipse *graphic = [Ellipse ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
 	[mGraphics addObject:graphic];
 	
-	EllipseGraphicView *graphicView = [[EllipseGraphicView alloc] initWithGraphic:graphic];
+	EllipseView *graphicView = [[EllipseView alloc] initWithGraphic:graphic];
 	[self addSubview:graphicView];
 	[graphicView release];
 }

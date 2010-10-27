@@ -6,17 +6,17 @@
 //  Copyright 2010 Beilstein Institut. All rights reserved.
 //
 
-#import "EllipseGraphicView.h"
+#import "EllipseView.h"
 
 
 const CGFloat padding = 10.0f;
 
 
-@implementation EllipseGraphicView
+@implementation EllipseView
 
 @synthesize graphic = mGraphic;
 
-- (id)initWithGraphic:(EllipseGraphic*)graphic {
+- (id)initWithGraphic:(Ellipse*)graphic {
     self = [super initWithFrame:NSRectFromCGRect(CGRectInset(graphic.bounds, -padding, -padding))];
     if (self) {
         // Initialization code here.
