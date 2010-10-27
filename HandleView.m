@@ -4,6 +4,7 @@
 //
 
 #import "HandleView.h"
+#import "NSView+HandleView.h"
 #import "NSColor+CGColor.h"
 
 #define HandleSize 4.0f
@@ -168,35 +169,3 @@
 }
 
 @end
-
-
-int bringToFront(id itemA, id itemB, void *target) {
-    if (itemA == target) {
-        return NSOrderedDescending;
-    } else if (itemB == target) {
-        return NSOrderedAscending;
-    } else {
-        return NSOrderedSame;
-    }
-}
-
-@implementation NSView (HandleViewAdditions)
-
-- (void)bringSubviewToFront:(NSView *)subview {
-    [self sortSubviewsUsingFunction:bringToFront context:subview];
-}
-
-- (NSRect)alignRectToBase:(NSRect)rect {
-	NSRect newRect = [self convertRectToBase:rect];
-	newRect.origin.x = floor(newRect.origin.x);
-	newRect.origin.y = floor(newRect.origin.y);
-	newRect.size.width = floor(newRect.size.width);
-	newRect.size.height = floor(newRect.size.height);
-	newRect = [self convertRectFromBase:newRect];
-	return newRect;
-}
-
-
-@end
-
-

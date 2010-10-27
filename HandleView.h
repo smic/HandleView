@@ -39,11 +39,3 @@ typedef enum _HandleType {
 + (HandleView*)handleViewWithPosition:(NSPoint)point;
 
 @end
-
-@interface NSView (HandleViewAdditions)
-
-- (void)bringSubviewToFront:(NSView *)subview;
-- (NSRect)alignRectToBase:(NSRect)rect;
-
-@end
-
