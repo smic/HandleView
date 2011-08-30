@@ -17,12 +17,12 @@ const CGFloat padding = 10.0f;
 @synthesize graphic = mGraphic;
 
 - (id)initWithGraphic:(Ellipse*)graphic {
-    self = [super initWithFrame:NSRectFromCGRect(CGRectInset(graphic.bounds, -padding, -padding))];
+    self = [super initWithFrame:CGRectInset(graphic.bounds, -padding, -padding)];
     if (self) {
         // Initialization code here.
 		self.graphic = graphic;
 		
-		NSLog(@"graphic.bounds = %@", NSStringFromRect(NSRectFromCGRect(graphic.bounds)));
+		NSLog(@"graphic.bounds = %@", NSStringFromRect(graphic.bounds));
 		NSLog(@"frame = %@", NSStringFromRect(self.frame));
 		
 		
@@ -65,7 +65,7 @@ const CGFloat padding = 10.0f;
 	CGContextRestoreGState(context);
 }
 
-- (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position {
+- (CGPoint)handleView:(HandleView*)handleView willChangePosition:(CGPoint)position {
 	
     if (mHandleView2 == handleView) {
 		position.y = mHandleView1.position.y;
@@ -75,7 +75,7 @@ const CGFloat padding = 10.0f;
 	return position;
 }
 
-- (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position {
+- (void)handleView:(HandleView*)handleView didChangePosition:(CGPoint)position {
 	if (mHandleView1 == handleView) {
 		self.graphic.center = CGPointMake(position.x + self.frame.origin.x,
 										  position.y + self.frame.origin.y);
@@ -87,7 +87,7 @@ const CGFloat padding = 10.0f;
 									   (position.y + self.frame.origin.y - self.graphic.center.y) * 2.0f);
 	}
 	
-	self.frame = NSRectFromCGRect(CGRectInset(self.graphic.bounds, -padding, -padding));
+	self.frame = CGRectInset(self.graphic.bounds, -padding, -padding);
 
 	mHandleView1.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
 									  self.graphic.center.y - self.frame.origin.y);

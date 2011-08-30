@@ -47,17 +47,17 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	[graphicView release];
 }
 
-- (void)handleView:(HandleView*)handleView didBeginMoving:(NSPoint)position {
+- (void)handleView:(HandleView*)handleView didBeginMoving:(CGPoint)position {
 	// make handles visible again
 	[handleView1 setHidden:YES];
 	[handleView2 setHidden:YES];
 }
 
-- (NSPoint)handleView:(HandleView*)handleView willChangePosition:(NSPoint)position {
+- (CGPoint)handleView:(HandleView*)handleView willChangePosition:(CGPoint)position {
 	
 	
     if (handleView1 == handleView) {
-        NSPoint center = NSMakePoint(100, 100);
+        CGPoint center = NSMakePoint(100, 100);
         CGFloat dx = position.x - center.x;
         CGFloat dy = position.y - center.y;
         CGFloat length = hypotf(dx, dy);
@@ -67,18 +67,18 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
         CGFloat radius = 50;
         return NSMakePoint(center.x + dx * radius / length, center.y + dy * radius / length);
     } else if (handleView2 == handleView) {
-        CGRect rect = NSRectToCGRect(self.bounds);
+        CGRect rect = self.bounds;
         return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
                            CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
     }
 	return position;
 }
 
-- (void)handleView:(HandleView*)handleView didChangePosition:(NSPoint)position {
+- (void)handleView:(HandleView*)handleView didChangePosition:(CGPoint)position {
 	[self setNeedsDisplay:YES];
 }
 
-- (void)handleView:(HandleView*)handleView didEndMoving:(NSPoint)position {
+- (void)handleView:(HandleView*)handleView didEndMoving:(CGPoint)position {
 	// show handles on move
 	[handleView1 setHidden:NO];
 	[handleView2 setHidden:NO];
@@ -91,12 +91,12 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	CGContextSaveGState(context);
 	
 	CGContextSetGrayFillColor(context, 0.7f, 1.0f);
-	CGContextFillRect(context, NSRectToCGRect(self.bounds));
+	CGContextFillRect(context, self.bounds);
 	
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
 	CGContextStrokeEllipseInRect(context, CGRectMake(50, 50, 100, 100));
 	
-	CGPoint points[] = {NSPointToCGPoint(handleView1.position), NSPointToCGPoint(handleView2.position)};
+	CGPoint points[] = {handleView1.position, handleView2.position};
 	CGContextStrokeLineSegments(context, points, 2);
 	
 	CGContextRestoreGState(context);

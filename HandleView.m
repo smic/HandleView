@@ -14,7 +14,7 @@
 
 @synthesize position = mPosition, type = mType, color = mColor, delegate = mDelegate;
 
-- (id)initWithPosition:(NSPoint)position {	
+- (id)initWithPosition:(CGPoint)position {	
     self = [super initWithFrame:NSMakeRect(0, 0, -HandleSize, -HandleSize)];
     if (self) {
         // Initialization code here.
@@ -31,7 +31,7 @@
     return self;
 }
 
-+ (HandleView*)handleViewWithPosition:(NSPoint)position {
++ (HandleView*)handleViewWithPosition:(CGPoint)position {
 	return [[[HandleView alloc] initWithPosition:position] autorelease];
 }
 
@@ -39,7 +39,7 @@
     // Drawing code here.
 	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
 	
-	CGRect bounds = NSRectToCGRect(self.bounds);
+	CGRect bounds = self.bounds;
 	bounds = CGRectInset(bounds, HandlePadding, HandlePadding); 
 	
 	CGContextSaveGState(context);
@@ -97,8 +97,8 @@
 	[[NSCursor closedHandCursor] push];
 	
 	// current position of the mouse pointer
-	NSPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
-	NSPoint relativePoint = NSMakePoint(mPosition.x - currentPoint.x, mPosition.y - currentPoint.y);
+	CGPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
+	CGPoint relativePoint = NSMakePoint(mPosition.x - currentPoint.x, mPosition.y - currentPoint.y);
 	
 	// waiting for dragging events
 	while ([event type]!=NSLeftMouseUp) {
@@ -107,7 +107,7 @@
 		// current position of the mouse pointer
 		currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 		
-		NSPoint newPosition = NSMakePoint(currentPoint.x + relativePoint.x,
+		CGPoint newPosition = NSMakePoint(currentPoint.x + relativePoint.x,
 										  currentPoint.y + relativePoint.y);
 		
 		// will change position

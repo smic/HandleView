@@ -9,7 +9,7 @@
 #import "NSView+HandleView.h"
 
 
-int bringToFront(id itemA, id itemB, void *target);
+NSComparisonResult bringToFront(id itemA, id itemB, void *target);
 
 @implementation NSView (HandleView)
 
@@ -19,10 +19,10 @@ int bringToFront(id itemA, id itemB, void *target);
 
 - (NSRect)alignRectToBase:(NSRect)rect {
 	NSRect newRect = [self convertRectToBase:rect];
-	newRect.origin.x = floor(newRect.origin.x);
-	newRect.origin.y = floor(newRect.origin.y);
-	newRect.size.width = floor(newRect.size.width);
-	newRect.size.height = floor(newRect.size.height);
+	newRect.origin.x = floorf(newRect.origin.x);
+	newRect.origin.y = floorf(newRect.origin.y);
+	newRect.size.width = floorf(newRect.size.width);
+	newRect.size.height = floorf(newRect.size.height);
 	newRect = [self convertRectFromBase:newRect];
 	return newRect;
 }
@@ -30,7 +30,7 @@ int bringToFront(id itemA, id itemB, void *target);
 
 @end
 
-int bringToFront(id itemA, id itemB, void *target) {
+NSComparisonResult bringToFront(id itemA, id itemB, void *target) {
     if (itemA == target) {
         return NSOrderedDescending;
     } else if (itemB == target) {
