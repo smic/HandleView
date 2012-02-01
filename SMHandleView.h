@@ -9,22 +9,16 @@
 #import <Cocoa/Cocoa.h>
 
 
-typedef enum _HandleType {
-	kHandleTypeNormal = 0,
-	kHandleTypeSpecial = 1
-} HandleType;
-
 @protocol SMHandleViewDelegate;
 
 @interface SMHandleView : NSView
 
 @property (nonatomic, assign) CGPoint position;
-@property (nonatomic, assign) HandleType type;
+@property (nonatomic, assign, getter = isSpecial) BOOL special;
 @property (nonatomic, retain) NSColor *color;
 @property (nonatomic, assign) id<SMHandleViewDelegate> delegate;
 
-- (id)initWithPosition:(CGPoint)point;
-+ (SMHandleView *)handleViewWithPosition:(CGPoint)point;
++ (SMHandleView *)handleView;
 
 @end
 

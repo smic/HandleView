@@ -12,13 +12,22 @@
 
 @implementation NSBezierPath (HandleView)
 
-+ (NSBezierPath *)bezierPathWithArrowWithPoint1:(NSPoint)point1 point2:(NSPoint)point2 headSize:(CGFloat)headSize {
++ (NSBezierPath *)bezierPathWithArrowWithPoint1:(NSPoint)point1 
+                                         point2:(NSPoint)point2 
+                                       headWidth:(CGFloat)headWidth
+                                      shaftWidth:(CGFloat)shaftWidth {
     NSBezierPath *path = [NSBezierPath bezierPath];
-    [path appendArrowWithPoint1:point1 point2:point2 headSize:headSize];
+    [path appendArrowWithPoint1:point1 
+                         point2:point2 
+                       headWidth:headWidth
+                      shaftWidth:shaftWidth];
     return path;
 }
 
-- (void)appendArrowWithPoint1:(NSPoint)point1 point2:(NSPoint)point2 headSize:(CGFloat)headSize {
+- (void)appendArrowWithPoint1:(NSPoint)point1 
+                       point2:(NSPoint)point2 
+                     headWidth:(CGFloat)headWidth
+                    shaftWidth:(CGFloat)shaftWidth {
     
     CGPoint d = CGPointSub(point2, point1);
     CGFloat length = CGPointLength(d);
@@ -30,18 +39,16 @@
     CGPoint n = CGPointNormalize(d);
     CGPoint o = CGPointOrthogonal(n);
     
-    CGFloat headSize2 = headSize / 2.0f;
-    
     // tail
-    [self moveToPoint:CGPointScaleAdd(point1, o, headSize2)];
-    [self lineToPoint:CGPointScaleAdd(point1, o, -headSize2)];
+    [self moveToPoint:CGPointScaleAdd(point2, o, shaftWidth)];
+    [self lineToPoint:CGPointScaleAdd(point2, o, -shaftWidth)];
     
     // head
-    [self lineToPoint:CGPointScaleAdd2(point2, o, -headSize2, n, -headSize)];
-    [self lineToPoint:CGPointScaleAdd2(point2, o, -headSize, n, -headSize)];
-    [self lineToPoint:point2];
-    [self lineToPoint:CGPointScaleAdd2(point2, o, headSize, n, -headSize)];
-    [self lineToPoint:CGPointScaleAdd2(point2, o, headSize2, n, -headSize)];
+    [self lineToPoint:CGPointScaleAdd2(point1, o, -shaftWidth, n, headWidth)];
+    [self lineToPoint:CGPointScaleAdd2(point1, o, -headWidth, n, headWidth)];
+    [self lineToPoint:point1];
+    [self lineToPoint:CGPointScaleAdd2(point1, o, headWidth, n, headWidth)];
+    [self lineToPoint:CGPointScaleAdd2(point1, o, shaftWidth, n, headWidth)];
     [self closePath];
 }
 

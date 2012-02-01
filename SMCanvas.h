@@ -14,5 +14,7 @@
 
 @property (nonatomic, assign) CGPoint point1;
 @property (nonatomic, assign) CGPoint point2;
+@property (nonatomic, assign) CGFloat headWidth;
+@property (nonatomic, assign) CGFloat shaftWidth;
 
 @end

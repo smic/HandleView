@@ -12,43 +12,40 @@
 
 
 #define HandleSize 4.0f
-#define HandlePadding 1.0f 
 
 static char SMHandleViewObservationContext;
 
 @implementation SMHandleView
 
 @synthesize position = _position;
-@synthesize type = _type;
+@synthesize special = _special;
 @synthesize color = _color;
 @synthesize delegate = _delegate;
 
 #pragma mark - Initialization / Deallocation
 
-- (id)initWithPosition:(CGPoint)position {	
-    self = [super initWithFrame:NSMakeRect(0, 0, -HandleSize, -HandleSize)];
+- (id)initWithFrame:(NSRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
         // Initialization code here.
-		self.position = position;
-		self.type = kHandleTypeNormal;
+		self.position = CGPointZero;
+		self.special = NO;
 		self.color = [NSColor whiteColor];
 		
-//		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
-		
 		[self addObserver:self forKeyPath:@"position" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
-		[self addObserver:self forKeyPath:@"type" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
+		[self addObserver:self forKeyPath:@"special" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
 		[self addObserver:self forKeyPath:@"color" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
     }
     return self;
 }
 
-+ (SMHandleView *)handleViewWithPosition:(CGPoint)position {
-	return [[[SMHandleView alloc] initWithPosition:position] autorelease];
++ (SMHandleView *)handleView {
+	return [[[SMHandleView alloc] initWithFrame:NSZeroRect] autorelease];
 }
 
 - (void)dealloc {
 	[self removeObserver:self forKeyPath:@"position" context:&SMHandleViewObservationContext];
-	[self removeObserver:self forKeyPath:@"type" context:&SMHandleViewObservationContext];
+	[self removeObserver:self forKeyPath:@"special" context:&SMHandleViewObservationContext];
 	[self removeObserver:self forKeyPath:@"color" context:&SMHandleViewObservationContext];
 	
 	self.color = nil;
@@ -58,39 +55,25 @@ static char SMHandleViewObservationContext;
 
 #pragma mark - Drawing
 
-- (void)drawRect:(NSRect)rect {
-    // Drawing code here.
-	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-	
-	CGRect bounds = self.bounds;
-	bounds = CGRectInset(bounds, HandlePadding, HandlePadding); 
-	
-	CGContextSaveGState(context);
-	
-	CGColorRef fillColor = [self.color createCGColor];
-	CGContextSetFillColorWithColor(context, fillColor);
-	CGColorRelease(fillColor);
-	
-	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
-	
-	if (self.type == kHandleTypeNormal) {
-		CGContextSetAllowsAntialiasing(context, NO);
-	
-		// fill background
-		CGContextFillRect(context, bounds);
-	
-		// stroke frame
-		CGContextStrokeRect(context, bounds);
-	
-		CGContextSetAllowsAntialiasing(context, YES);
-	} else if (self.type == kHandleTypeSpecial) {
-		CGContextBeginPath(context);
-		CGContextAddEllipseInRect(context, bounds);
-		
-		CGContextDrawPath(context, kCGPathFillStroke);
-	}
-	
-	CGContextRestoreGState(context);
+- (void)drawRect:(NSRect)dirtyRect {
+    // Drawing code here.    
+    NSRect rect = NSMakeRect(self.bounds.origin.x + 0.5f, 
+                             self.bounds.origin.y + 0.5f, 
+                             self.bounds.size.width - 1.0f, 
+                             self.bounds.size.height - 1.0f);
+    
+    NSBezierPath *path = [self isSpecial] ? [NSBezierPath bezierPathWithOvalInRect:rect] : [NSBezierPath bezierPathWithRect:rect];
+    [path setLineWidth:0.0f];
+    
+    if (self.color) {
+        [self.color setFill];
+    } else {
+        [[NSColor whiteColor] setFill];
+    }
+    [[NSColor blackColor] setStroke];
+    
+    [path fill];
+    [path stroke];
 }
 
 #pragma mark - Mouse handling
@@ -149,9 +132,6 @@ static char SMHandleViewObservationContext;
 		if ([delegate respondsToSelector:@selector(handleView:didChangePosition:)]) {
 			[delegate handleView:self didChangePosition:position];
 		}
-		
-		// set frame for new position
-//		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(mPosition.x, mPosition.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
 	}
 	
 	// restore cursor
@@ -189,9 +169,9 @@ static char SMHandleViewObservationContext;
 		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(self.position.x, 
                                                                   self.position.y, 
                                                                   0, 0), 
-                                                       -HandleSize - HandlePadding, 
-                                                       -HandleSize - HandlePadding)];
-	} else if([keyPath isEqualToString:@"type"]) {
+                                                       -HandleSize, 
+                                                       -HandleSize)];
+	} else if([keyPath isEqualToString:@"special"]) {
 		[self setNeedsDisplay:YES];
 	} else if([keyPath isEqualToString:@"color"]) {
 		[self setNeedsDisplay:YES];

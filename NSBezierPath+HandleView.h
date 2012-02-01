@@ -10,7 +10,13 @@
 
 @interface NSBezierPath (HandleView)
 
-+ (NSBezierPath *)bezierPathWithArrowWithPoint1:(NSPoint)point1 point2:(NSPoint)point2 headSize:(CGFloat)headSize;
-- (void)appendArrowWithPoint1:(NSPoint)point1 point2:(NSPoint)point2 headSize:(CGFloat)headSize;
++ (NSBezierPath *)bezierPathWithArrowWithPoint1:(NSPoint)point1 
+                                         point2:(NSPoint)point2 
+                                       headWidth:(CGFloat)headWidth 
+                                      shaftWidth:(CGFloat)shaftWidth;
+- (void)appendArrowWithPoint1:(NSPoint)point1 
+                       point2:(NSPoint)point2 
+                     headWidth:(CGFloat)headWidth
+                    shaftWidth:(CGFloat)shaftWidth;
 
 @end
