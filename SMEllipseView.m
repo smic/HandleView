@@ -21,7 +21,7 @@ const CGFloat padding = 10.0f;
 
 @implementation SMEllipseView
 
-@synthesize graphic = mGraphic;
+@synthesize graphic = _graphic;
 
 @synthesize handleView1 = _handleView1;
 @synthesize handleView2 = _handleView2;
@@ -29,7 +29,7 @@ const CGFloat padding = 10.0f;
 
 #pragma mark - Initialization / Deallocation
 
-- (id)initWithGraphic:(SMEllipse*)graphic {
+- (id)initWithGraphic:(SMEllipse *)graphic {
     self = [super initWithFrame:CGRectInset(graphic.bounds, -padding, -padding)];
     if (self) {
         // Initialization code here.
@@ -87,7 +87,7 @@ const CGFloat padding = 10.0f;
 
 #pragma mark - Handle view delegate
 
-- (CGPoint)handleView:(SMHandleView*)handleView willChangePosition:(CGPoint)position {
+- (CGPoint)handleView:(SMHandleView *)handleView willChangePosition:(CGPoint)position {
 	
     if (self.handleView2 == handleView) {
 		position.y = self.handleView1.position.y;
@@ -97,7 +97,7 @@ const CGFloat padding = 10.0f;
 	return position;
 }
 
-- (void)handleView:(SMHandleView*)handleView didChangePosition:(CGPoint)position {
+- (void)handleView:(SMHandleView *)handleView didChangePosition:(CGPoint)position {
 	if (self.handleView1 == handleView) {
 		self.graphic.center = CGPointMake(position.x + self.frame.origin.x,
 										  position.y + self.frame.origin.y);

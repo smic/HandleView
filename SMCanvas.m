@@ -17,7 +17,6 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 		return max;
 	else if (value < min)
 		return min;
-		
 	return value;
 }
 

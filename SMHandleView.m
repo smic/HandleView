@@ -42,7 +42,7 @@ static char SMHandleViewObservationContext;
     return self;
 }
 
-+ (SMHandleView*)handleViewWithPosition:(CGPoint)position {
++ (SMHandleView *)handleViewWithPosition:(CGPoint)position {
 	return [[[SMHandleView alloc] initWithPosition:position] autorelease];
 }
 
@@ -164,7 +164,8 @@ static char SMHandleViewObservationContext;
 }
 
 // "OpenHand" as standard mouse cursor
-- (void) resetCursorRects {
+// Source: http://borkware.com/quickies/single?id=200
+- (void)resetCursorRects {
     [super resetCursorRects];
     [self addCursorRect:self.bounds cursor:[NSCursor openHandCursor]];
 }

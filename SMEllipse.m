@@ -11,7 +11,8 @@
 
 @implementation SMEllipse
 
-@synthesize center = mCenter, size = mSize;
+@synthesize center = _center;
+@synthesize size = _size;
 
 - (id)initWithCenter:(CGPoint)center size:(CGSize)size {
 	self = [super init];
@@ -22,12 +23,15 @@
 	return self;
 }
 
-+ (SMEllipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
++ (SMEllipse *)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
 	return [[[SMEllipse alloc] initWithCenter:center size:size] autorelease];
 }
 
 - (CGRect)bounds {
-	return CGRectMake(mCenter.x - mSize.width / 2.0f, mCenter.y - mSize.height / 2.0f, mSize.width, mSize.height);
+	return CGRectMake(self.center.x - self.size.width / 2.0f, 
+                      self.center.y - self.size.height / 2.0f, 
+                      self.size.width, 
+                      self.size.height);
 }
 
 @end

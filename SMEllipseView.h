@@ -15,6 +15,6 @@
 
 @property (nonatomic, retain) SMEllipse *graphic;
 
-- (id)initWithGraphic:(SMEllipse*)graphic;
+- (id)initWithGraphic:(SMEllipse *)graphic;
 
 @end

@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SMHandleView.h"
 
+
 @interface SMCanvas : NSView <SMHandleViewDelegate>
 
 @end
