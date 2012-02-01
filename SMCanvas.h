@@ -12,4 +12,7 @@
 
 @interface SMCanvas : NSView <SMHandleViewDelegate>
 
+@property (nonatomic, assign) CGPoint point1;
+@property (nonatomic, assign) CGPoint point2;
+
 @end

@@ -8,8 +8,8 @@
 
 #import "SMCanvas.h"
 #import "SMHandleView.h"
-#import "SMEllipse.h"
-#import "SMEllipseView.h"
+#import "SMGeometry.h"
+#import "NSBezierPath+HandleView.h"
 
 
 CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
@@ -31,6 +31,9 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 @implementation SMCanvas
 
+@synthesize point1 = _point1;
+@synthesize point2 = _point2;
+
 @synthesize handleView1 = _handleView1;
 @synthesize handleView2 = _handleView2;
 
@@ -49,13 +52,10 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	
 	self.handleView2 = [SMHandleView handleViewWithPosition:NSMakePoint(300, 150)];
     self.handleView2.delegate = self;
-	[self addSubview:self.handleView2];
-	
-	SMEllipse *graphic = [SMEllipse ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
-	
-	SMEllipseView *graphicView = [[SMEllipseView alloc] initWithGraphic:graphic];
-	[self addSubview:graphicView];
-	[graphicView release];
+	[self addSubview:self.handleView2];	
+    
+    self.point1 = self.handleView1.position;
+    self.point2 = self.handleView2.position;
 }
 
 - (void)dealloc {
@@ -76,20 +76,25 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 - (CGPoint)handleView:(SMHandleView*)handleView willChangePosition:(CGPoint)position {
 	
 	
+//    if (self.handleView1 == handleView) {
+//        CGPoint center = NSMakePoint(100, 100);
+//        CGFloat dx = position.x - center.x;
+//        CGFloat dy = position.y - center.y;
+//        CGFloat length = hypotf(dx, dy);
+//        if (length == 0) {
+//            return NSMakePoint(150, 100);
+//        }
+//        CGFloat radius = 50;
+//        return NSMakePoint(center.x + dx * radius / length, center.y + dy * radius / length);
+//    } else if (self.handleView2 == handleView) {
+//        CGRect rect = self.bounds;
+//        return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
+//                           CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
+//    }
     if (self.handleView1 == handleView) {
-        CGPoint center = NSMakePoint(100, 100);
-        CGFloat dx = position.x - center.x;
-        CGFloat dy = position.y - center.y;
-        CGFloat length = hypotf(dx, dy);
-        if (length == 0) {
-            return NSMakePoint(150, 100);
-        }
-        CGFloat radius = 50;
-        return NSMakePoint(center.x + dx * radius / length, center.y + dy * radius / length);
+        self.point1 = handleView.position;
     } else if (self.handleView2 == handleView) {
-        CGRect rect = self.bounds;
-        return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
-                           CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
+        self.point2 = handleView.position;
     }
 	return position;
 }
@@ -108,20 +113,18 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
-	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    [[NSColor redColor] setFill];
+    [[NSColor blackColor] setStroke];
+
+    CGPoint point1 = self.point1;
+    CGPoint point2 = self.point2;
 	
-	CGContextSaveGState(context);
-	
-	CGContextSetGrayFillColor(context, 0.7f, 1.0f);
-	CGContextFillRect(context, self.bounds);
-	
-	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
-	CGContextStrokeEllipseInRect(context, CGRectMake(50, 50, 100, 100));
-	
-	CGPoint points[] = {self.handleView1.position, self.handleView2.position};
-	CGContextStrokeLineSegments(context, points, 2);
-	
-	CGContextRestoreGState(context);
+    CGFloat headSize = 50.0f;
+    
+    NSBezierPath *path = [NSBezierPath bezierPathWithArrowWithPoint1:point1 point2:point2 headSize:headSize];
+
+    [path fill];
+    [path stroke];
 }
 
 @end
