@@ -2,6 +2,9 @@
 //  Canvas.m
 //  HandleView
 //
+//  Created by Stephan Michels on 27.10.10.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
+//
 
 #import "Canvas.h"
 #import "HandleView.h"
@@ -18,7 +21,19 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	return value;
 }
 
+
+@interface Canvas ()
+
+@property (nonatomic, retain) HandleView *handleView1;
+@property (nonatomic, retain) HandleView *handleView2;
+
+@end
+
+
 @implementation Canvas
+
+@synthesize handleView1 = _handleView1;
+@synthesize handleView2 = _handleView2;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -29,34 +44,40 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 }
 
 - (void)awakeFromNib {
-	handleView1 = [[HandleView handleViewWithPosition:NSMakePoint(100, 50)] retain];
-	handleView1.delegate = self;
-	[self addSubview:handleView1];
+	self.handleView1 = [HandleView handleViewWithPosition:NSMakePoint(100, 50)];
+	self.handleView1.delegate = self;
+	[self addSubview:self.handleView1];
 	
-	handleView2 = [[HandleView handleViewWithPosition:NSMakePoint(300, 150)] retain];
-	handleView2.delegate = self;
-	[self addSubview:handleView2];
-	
-	mGraphics = [[NSMutableArray alloc] init];
+	self.handleView2 = [HandleView handleViewWithPosition:NSMakePoint(300, 150)];
+    self.handleView2.delegate = self;
+	[self addSubview:self.handleView2];
 	
 	Ellipse *graphic = [Ellipse ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
-	[mGraphics addObject:graphic];
 	
 	EllipseView *graphicView = [[EllipseView alloc] initWithGraphic:graphic];
 	[self addSubview:graphicView];
 	[graphicView release];
 }
 
+- (void)dealloc {
+    self.handleView1 = nil;
+	self.handleView2 = nil;
+	
+	[super dealloc];
+}
+
+#pragma mark - Handle view delegate
+
 - (void)handleView:(HandleView*)handleView didBeginMoving:(CGPoint)position {
 	// make handles visible again
-	[handleView1 setHidden:YES];
-	[handleView2 setHidden:YES];
+	[self.handleView1 setHidden:YES];
+	[self.handleView2 setHidden:YES];
 }
 
 - (CGPoint)handleView:(HandleView*)handleView willChangePosition:(CGPoint)position {
 	
 	
-    if (handleView1 == handleView) {
+    if (self.handleView1 == handleView) {
         CGPoint center = NSMakePoint(100, 100);
         CGFloat dx = position.x - center.x;
         CGFloat dy = position.y - center.y;
@@ -66,7 +87,7 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
         }
         CGFloat radius = 50;
         return NSMakePoint(center.x + dx * radius / length, center.y + dy * radius / length);
-    } else if (handleView2 == handleView) {
+    } else if (self.handleView2 == handleView) {
         CGRect rect = self.bounds;
         return NSMakePoint(CGFloatClamp(position.x, CGRectGetMinX(rect), CGRectGetMaxX(rect)), 
                            CGFloatClamp(position.y, CGRectGetMinY(rect), CGRectGetMaxY(rect)));
@@ -80,9 +101,11 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 - (void)handleView:(HandleView*)handleView didEndMoving:(CGPoint)position {
 	// show handles on move
-	[handleView1 setHidden:NO];
-	[handleView2 setHidden:NO];
+	[self.handleView1 setHidden:NO];
+	[self.handleView2 setHidden:NO];
 }
+
+#pragma mark - Drawing
 
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
@@ -96,19 +119,10 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	CGContextSetGrayStrokeColor(context, 0.0f, 1.0f);
 	CGContextStrokeEllipseInRect(context, CGRectMake(50, 50, 100, 100));
 	
-	CGPoint points[] = {handleView1.position, handleView2.position};
+	CGPoint points[] = {self.handleView1.position, self.handleView2.position};
 	CGContextStrokeLineSegments(context, points, 2);
 	
 	CGContextRestoreGState(context);
-}
-
-- (void)dealloc {
-	[handleView1 release];
-	[handleView2 release];
-	
-	[mGraphics release];
-	
-	[super dealloc];
 }
 
 @end

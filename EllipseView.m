@@ -3,7 +3,7 @@
 //  HandleView
 //
 //  Created by Stephan Michels on 25.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
 #import "EllipseView.h"
@@ -11,10 +11,23 @@
 
 const CGFloat padding = 10.0f;
 
+@interface EllipseView ()
+
+@property (nonatomic, retain) HandleView *handleView1;
+@property (nonatomic, retain) HandleView *handleView2;
+@property (nonatomic, retain) HandleView *handleView3;
+
+@end
 
 @implementation EllipseView
 
 @synthesize graphic = mGraphic;
+
+@synthesize handleView1 = _handleView1;
+@synthesize handleView2 = _handleView2;
+@synthesize handleView3 = _handleView3;
+
+#pragma mark - Initialization / Deallocation
 
 - (id)initWithGraphic:(Ellipse*)graphic {
     self = [super initWithFrame:CGRectInset(graphic.bounds, -padding, -padding)];
@@ -22,35 +35,42 @@ const CGFloat padding = 10.0f;
         // Initialization code here.
 		self.graphic = graphic;
 		
-		NSLog(@"graphic.bounds = %@", NSStringFromRect(graphic.bounds));
-		NSLog(@"frame = %@", NSStringFromRect(self.frame));
+		self.handleView1 = [HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
+                                                                          self.graphic.center.y - self.frame.origin.y)];
+		self.handleView1.delegate = self;
+		[self addSubview:self.handleView1];
 		
+		self.handleView2 = [HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x + self.graphic.size.width / 2.0f, 
+                                                                          self.graphic.center.y - self.frame.origin.y)];
+		self.handleView2.type = kHandleTypeSpecial;
+		self.handleView2.color = [NSColor redColor];
+		self.handleView2.delegate = self;
+		[self addSubview:self.handleView2];
 		
-		mHandleView1 = [[HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
-																	  self.graphic.center.y - self.frame.origin.y)] retain];
-		mHandleView1.delegate = self;
-		[self addSubview:mHandleView1];
-		
-		mHandleView2 = [[HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x + self.graphic.size.width / 2.0f, 
-																	  self.graphic.center.y - self.frame.origin.y)] retain];
-		mHandleView2.type = kHandleTypeSpecial;
-		mHandleView2.color = [NSColor redColor];
-		mHandleView2.delegate = self;
-		[self addSubview:mHandleView2];
-		
-		mHandleView3 = [[HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
-																	   self.graphic.center.y - self.frame.origin.y + self.graphic.size.height / 2.0f)] retain];
-		mHandleView3.type = kHandleTypeSpecial;
-		mHandleView3.color = [NSColor redColor];
-		mHandleView3.delegate = self;
-		[self addSubview:mHandleView3];
+		self.handleView3 = [HandleView handleViewWithPosition:NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
+                                                                          self.graphic.center.y - self.frame.origin.y + self.graphic.size.height / 2.0f)];
+		self.handleView3.type = kHandleTypeSpecial;
+		self.handleView3.color = [NSColor redColor];
+		self.handleView3.delegate = self;
+		[self addSubview:self.handleView3];
     }
     return self;
 }
 
+- (void)dealloc {
+	self.graphic = nil;
+	
+	self.handleView1 = nil;
+	self.handleView2 = nil;
+	self.handleView3 = nil;
+	
+	[super dealloc];
+}
+
+#pragma mark - Drawing
+
 - (void)drawRect:(NSRect)rect {
     // Drawing code here.
-	
 	CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
 	
 	CGContextSaveGState(context);
@@ -65,48 +85,40 @@ const CGFloat padding = 10.0f;
 	CGContextRestoreGState(context);
 }
 
+#pragma mark - Handle view delegate
+
 - (CGPoint)handleView:(HandleView*)handleView willChangePosition:(CGPoint)position {
 	
-    if (mHandleView2 == handleView) {
-		position.y = mHandleView1.position.y;
-    } else if (mHandleView3 == handleView) {
-		position.x = mHandleView1.position.x;
+    if (self.handleView2 == handleView) {
+		position.y = self.handleView1.position.y;
+    } else if (self.handleView3 == handleView) {
+		position.x = self.handleView1.position.x;
     }
 	return position;
 }
 
 - (void)handleView:(HandleView*)handleView didChangePosition:(CGPoint)position {
-	if (mHandleView1 == handleView) {
+	if (self.handleView1 == handleView) {
 		self.graphic.center = CGPointMake(position.x + self.frame.origin.x,
 										  position.y + self.frame.origin.y);
-	} else if (mHandleView2 == handleView) {
+	} else if (self.handleView2 == handleView) {
 		self.graphic.size = CGSizeMake((position.x + self.frame.origin.x - self.graphic.center.x) * 2.0f,
-										self.graphic.size.height);
-	} else if (mHandleView3 == handleView) {
+                                       self.graphic.size.height);
+	} else if (self.handleView3 == handleView) {
 		self.graphic.size = CGSizeMake(self.graphic.size.width,
 									   (position.y + self.frame.origin.y - self.graphic.center.y) * 2.0f);
 	}
 	
 	self.frame = CGRectInset(self.graphic.bounds, -padding, -padding);
-
-	mHandleView1.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
-									  self.graphic.center.y - self.frame.origin.y);
+    
+	self.handleView1.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
+                                            self.graphic.center.y - self.frame.origin.y);
 	
-	mHandleView2.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x + self.graphic.size.width / 2.0f, 
-									  self.graphic.center.y - self.frame.origin.y);
+	self.handleView2.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x + self.graphic.size.width / 2.0f, 
+                                            self.graphic.center.y - self.frame.origin.y);
 	
-	mHandleView3.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
-										self.graphic.center.y - self.frame.origin.y + self.graphic.size.height / 2.0f);
-}
-
-- (void)dealloc {
-	self.graphic = nil;
-	
-	[mHandleView1 release];
-	[mHandleView2 release];
-	[mHandleView3 release];
-	
-	[super dealloc];
+	self.handleView3.position = NSMakePoint(self.graphic.center.x - self.frame.origin.x, 
+                                            self.graphic.center.y - self.frame.origin.y + self.graphic.size.height / 2.0f);
 }
 
 @end

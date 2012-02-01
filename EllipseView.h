@@ -3,7 +3,7 @@
 //  HandleView
 //
 //  Created by Stephan Michels on 25.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -11,13 +11,7 @@
 #import "HandleView.h"
 
 
-@interface EllipseView : NSView <HandleViewDelegate> {
-	Ellipse *mGraphic;
-	
-	HandleView *mHandleView1;
-	HandleView *mHandleView2;
-	HandleView *mHandleView3;
-}
+@interface EllipseView : NSView <HandleViewDelegate>
 
 @property (nonatomic, retain) Ellipse *graphic;
 

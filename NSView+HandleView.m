@@ -3,7 +3,7 @@
 //  HandleView
 //
 //  Created by Stephan Michels on 27.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
 #import "NSView+HandleView.h"
@@ -26,7 +26,6 @@ NSComparisonResult bringToFront(id itemA, id itemB, void *target);
 	newRect = [self convertRectFromBase:newRect];
 	return newRect;
 }
-
 
 @end
 

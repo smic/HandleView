@@ -1,9 +1,9 @@
 //
 //  NSColor+CGColor.h
-//  LogicGates
+//  HandleView
 //
 //  Created by Stephan Michels on 05.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
