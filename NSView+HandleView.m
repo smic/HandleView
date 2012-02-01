@@ -9,12 +9,12 @@
 #import "NSView+HandleView.h"
 
 
-NSComparisonResult bringToFront(id itemA, id itemB, void *target);
+NSComparisonResult SMBringToFront(id itemA, id itemB, void *target);
 
 @implementation NSView (SMHandleView)
 
 - (void)bringSubviewToFront:(NSView *)subview {
-    [self sortSubviewsUsingFunction:bringToFront context:subview];
+    [self sortSubviewsUsingFunction:SMBringToFront context:subview];
 }
 
 - (NSRect)alignRectToBase:(NSRect)rect {
@@ -29,7 +29,7 @@ NSComparisonResult bringToFront(id itemA, id itemB, void *target);
 
 @end
 
-NSComparisonResult bringToFront(id itemA, id itemB, void *target) {
+NSComparisonResult SMBringToFront(id itemA, id itemB, void *target) {
     if (itemA == target) {
         return NSOrderedDescending;
     } else if (itemB == target) {
