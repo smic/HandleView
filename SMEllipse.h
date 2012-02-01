@@ -1,15 +1,15 @@
 //
-//  EllipseGraphic.h
+//  SMEllipse.h
 //  HandleView
 //
 //  Created by Stephan Michels on 25.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
 
-@interface Ellipse : NSObject {
+@interface SMEllipse : NSObject {
 	CGPoint mCenter;
 	CGSize mSize;
 }
@@ -21,6 +21,6 @@
 
 - (id)initWithCenter:(CGPoint)center size:(CGSize)size;
 
-+ (Ellipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size;
++ (SMEllipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size;
 
 @end

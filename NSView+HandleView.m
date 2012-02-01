@@ -1,5 +1,5 @@
 //
-//  NSView+Canvas.m
+//  NSView+SMCanvas.m
 //  HandleView
 //
 //  Created by Stephan Michels on 27.10.10.
@@ -11,7 +11,7 @@
 
 NSComparisonResult bringToFront(id itemA, id itemB, void *target);
 
-@implementation NSView (HandleView)
+@implementation NSView (SMHandleView)
 
 - (void)bringSubviewToFront:(NSView *)subview {
     [self sortSubviewsUsingFunction:bringToFront context:subview];

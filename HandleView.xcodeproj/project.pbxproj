@@ -11,10 +11,10 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		D40035731262F8380082F08D /* HandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035721262F8380082F08D /* HandleView.m */; };
-		D40035951262FB250082F08D /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035941262FB250082F08D /* Canvas.m */; };
-		D48A712A1275601300425A67 /* EllipseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A71291275601300425A67 /* EllipseView.m */; };
-		D48A712E1275606000425A67 /* Ellipse.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A712D1275606000425A67 /* Ellipse.m */; };
+		D40035731262F8380082F08D /* SMHandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035721262F8380082F08D /* SMHandleView.m */; };
+		D40035951262FB250082F08D /* SMCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035941262FB250082F08D /* SMCanvas.m */; };
+		D48A712A1275601300425A67 /* SMEllipseView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A71291275601300425A67 /* SMEllipseView.m */; };
+		D48A712E1275606000425A67 /* SMEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A712D1275606000425A67 /* SMEllipse.m */; };
 		D48A7436127810BC00425A67 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A7435127810BC00425A67 /* NSColor+CGColor.m */; };
 		D48A748D12785CC400425A67 /* NSView+HandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A748C12785CC400425A67 /* NSView+HandleView.m */; };
 /* End PBXBuildFile section */
@@ -30,14 +30,14 @@
 		32CA4F630368D1EE00C91783 /* HandleView_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleView_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* HandleView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HandleView.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D40035711262F8380082F08D /* HandleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleView.h; sourceTree = "<group>"; };
-		D40035721262F8380082F08D /* HandleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleView.m; sourceTree = "<group>"; };
-		D40035931262FB250082F08D /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
-		D40035941262FB250082F08D /* Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Canvas.m; sourceTree = "<group>"; };
-		D48A71281275601300425A67 /* EllipseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EllipseView.h; sourceTree = "<group>"; };
-		D48A71291275601300425A67 /* EllipseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EllipseView.m; sourceTree = "<group>"; };
-		D48A712C1275606000425A67 /* Ellipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ellipse.h; sourceTree = "<group>"; };
-		D48A712D1275606000425A67 /* Ellipse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ellipse.m; sourceTree = "<group>"; };
+		D40035711262F8380082F08D /* SMHandleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMHandleView.h; sourceTree = "<group>"; };
+		D40035721262F8380082F08D /* SMHandleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMHandleView.m; sourceTree = "<group>"; };
+		D40035931262FB250082F08D /* SMCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SMCanvas.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		D40035941262FB250082F08D /* SMCanvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMCanvas.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D48A71281275601300425A67 /* SMEllipseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMEllipseView.h; sourceTree = "<group>"; };
+		D48A71291275601300425A67 /* SMEllipseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMEllipseView.m; sourceTree = "<group>"; };
+		D48A712C1275606000425A67 /* SMEllipse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMEllipse.h; sourceTree = "<group>"; };
+		D48A712D1275606000425A67 /* SMEllipse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMEllipse.m; sourceTree = "<group>"; };
 		D48A7434127810BC00425A67 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
 		D48A7435127810BC00425A67 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 		D48A748B12785CC400425A67 /* NSView+HandleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+HandleView.h"; sourceTree = "<group>"; };
@@ -60,12 +60,12 @@
 			isa = PBXGroup;
 			children = (
 				D48A712B1275604C00425A67 /* Model */,
-				D40035711262F8380082F08D /* HandleView.h */,
-				D40035721262F8380082F08D /* HandleView.m */,
-				D40035931262FB250082F08D /* Canvas.h */,
-				D40035941262FB250082F08D /* Canvas.m */,
-				D48A71281275601300425A67 /* EllipseView.h */,
-				D48A71291275601300425A67 /* EllipseView.m */,
+				D40035711262F8380082F08D /* SMHandleView.h */,
+				D40035721262F8380082F08D /* SMHandleView.m */,
+				D40035931262FB250082F08D /* SMCanvas.h */,
+				D40035941262FB250082F08D /* SMCanvas.m */,
+				D48A71281275601300425A67 /* SMEllipseView.h */,
+				D48A71291275601300425A67 /* SMEllipseView.m */,
 				D48A7434127810BC00425A67 /* NSColor+CGColor.h */,
 				D48A7435127810BC00425A67 /* NSColor+CGColor.m */,
 				D48A748B12785CC400425A67 /* NSView+HandleView.h */,
@@ -143,8 +143,8 @@
 		D48A712B1275604C00425A67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D48A712C1275606000425A67 /* Ellipse.h */,
-				D48A712D1275606000425A67 /* Ellipse.m */,
+				D48A712C1275606000425A67 /* SMEllipse.h */,
+				D48A712D1275606000425A67 /* SMEllipse.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -212,10 +212,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				D40035731262F8380082F08D /* HandleView.m in Sources */,
-				D40035951262FB250082F08D /* Canvas.m in Sources */,
-				D48A712A1275601300425A67 /* EllipseView.m in Sources */,
-				D48A712E1275606000425A67 /* Ellipse.m in Sources */,
+				D40035731262F8380082F08D /* SMHandleView.m in Sources */,
+				D40035951262FB250082F08D /* SMCanvas.m in Sources */,
+				D48A712A1275601300425A67 /* SMEllipseView.m in Sources */,
+				D48A712E1275606000425A67 /* SMEllipse.m in Sources */,
 				D48A7436127810BC00425A67 /* NSColor+CGColor.m in Sources */,
 				D48A748D12785CC400425A67 /* NSView+HandleView.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  NSView+Canvas.h
+//  NSView+SMCanvas.h
 //  HandleView
 //
 //  Created by Stephan Michels on 27.10.10.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface NSView (HandleView)
+@interface NSView (SMHandleView)
 
 - (void)bringSubviewToFront:(NSView *)subview;
 - (NSRect)alignRectToBase:(NSRect)rect;

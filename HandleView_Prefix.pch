@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'HandleView' target in the 'HandleView' project
+// Prefix header for all source files of the 'SMHandleView' target in the 'SMHandleView' project
 //
 
 #ifdef __OBJC__

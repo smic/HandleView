@@ -1,15 +1,15 @@
 //
-//  Canvas.m
+//  SMCanvas.m
 //  HandleView
 //
 //  Created by Stephan Michels on 27.10.10.
 //  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
-#import "Canvas.h"
-#import "HandleView.h"
-#import "Ellipse.h"
-#import "EllipseView.h"
+#import "SMCanvas.h"
+#import "SMHandleView.h"
+#import "SMEllipse.h"
+#import "SMEllipseView.h"
 
 
 CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
@@ -22,15 +22,15 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 }
 
 
-@interface Canvas ()
+@interface SMCanvas ()
 
-@property (nonatomic, retain) HandleView *handleView1;
-@property (nonatomic, retain) HandleView *handleView2;
+@property (nonatomic, retain) SMHandleView *handleView1;
+@property (nonatomic, retain) SMHandleView *handleView2;
 
 @end
 
 
-@implementation Canvas
+@implementation SMCanvas
 
 @synthesize handleView1 = _handleView1;
 @synthesize handleView2 = _handleView2;
@@ -44,17 +44,17 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 }
 
 - (void)awakeFromNib {
-	self.handleView1 = [HandleView handleViewWithPosition:NSMakePoint(100, 50)];
+	self.handleView1 = [SMHandleView handleViewWithPosition:NSMakePoint(100, 50)];
 	self.handleView1.delegate = self;
 	[self addSubview:self.handleView1];
 	
-	self.handleView2 = [HandleView handleViewWithPosition:NSMakePoint(300, 150)];
+	self.handleView2 = [SMHandleView handleViewWithPosition:NSMakePoint(300, 150)];
     self.handleView2.delegate = self;
 	[self addSubview:self.handleView2];
 	
-	Ellipse *graphic = [Ellipse ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
+	SMEllipse *graphic = [SMEllipse ellipseGraphicWithCenter:CGPointMake(200, 200) size:CGSizeMake(100, 100)];
 	
-	EllipseView *graphicView = [[EllipseView alloc] initWithGraphic:graphic];
+	SMEllipseView *graphicView = [[SMEllipseView alloc] initWithGraphic:graphic];
 	[self addSubview:graphicView];
 	[graphicView release];
 }
@@ -68,13 +68,13 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 
 #pragma mark - Handle view delegate
 
-- (void)handleView:(HandleView*)handleView didBeginMoving:(CGPoint)position {
+- (void)handleView:(SMHandleView*)handleView didBeginMoving:(CGPoint)position {
 	// make handles visible again
 	[self.handleView1 setHidden:YES];
 	[self.handleView2 setHidden:YES];
 }
 
-- (CGPoint)handleView:(HandleView*)handleView willChangePosition:(CGPoint)position {
+- (CGPoint)handleView:(SMHandleView*)handleView willChangePosition:(CGPoint)position {
 	
 	
     if (self.handleView1 == handleView) {
@@ -95,11 +95,11 @@ CGFloat CGFloatClamp(CGFloat value, CGFloat min, CGFloat max) {
 	return position;
 }
 
-- (void)handleView:(HandleView*)handleView didChangePosition:(CGPoint)position {
+- (void)handleView:(SMHandleView*)handleView didChangePosition:(CGPoint)position {
 	[self setNeedsDisplay:YES];
 }
 
-- (void)handleView:(HandleView*)handleView didEndMoving:(CGPoint)position {
+- (void)handleView:(SMHandleView*)handleView didEndMoving:(CGPoint)position {
 	// show handles on move
 	[self.handleView1 setHidden:NO];
 	[self.handleView2 setHidden:NO];

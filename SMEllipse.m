@@ -1,15 +1,15 @@
 //
-//  EllipseGraphic.m
+//  SMEllipse.m
 //  HandleView
 //
 //  Created by Stephan Michels on 25.10.10.
-//  Copyright 2010 Beilstein Institut. All rights reserved.
+//  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
-#import "Ellipse.h"
+#import "SMEllipse.h"
 
 
-@implementation Ellipse
+@implementation SMEllipse
 
 @synthesize center = mCenter, size = mSize;
 
@@ -22,8 +22,8 @@
 	return self;
 }
 
-+ (Ellipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
-	return [[[Ellipse alloc] initWithCenter:center size:size] autorelease];
++ (SMEllipse*)ellipseGraphicWithCenter:(CGPoint)center size:(CGSize)size {
+	return [[[SMEllipse alloc] initWithCenter:center size:size] autorelease];
 }
 
 - (CGRect)bounds {

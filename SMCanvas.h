@@ -1,5 +1,5 @@
 //
-//  Canvas.h
+//  SMCanvas.h
 //  HandleView
 //
 //  Created by Stephan Michels on 27.10.10.
@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "HandleView.h"
+#import "SMHandleView.h"
 
-@interface Canvas : NSView <HandleViewDelegate>
+@interface SMCanvas : NSView <SMHandleViewDelegate>
 
 @end

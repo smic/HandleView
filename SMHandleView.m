@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Stephan Michels Softwareentwicklung und Beratung. All rights reserved.
 //
 
-#import "HandleView.h"
+#import "SMHandleView.h"
 #import "NSView+HandleView.h"
 #import "NSColor+CGColor.h"
 
@@ -14,9 +14,9 @@
 #define HandleSize 4.0f
 #define HandlePadding 1.0f 
 
-static char HandleViewObservationContext;
+static char SMHandleViewObservationContext;
 
-@implementation HandleView
+@implementation SMHandleView
 
 @synthesize position = _position;
 @synthesize type = _type;
@@ -35,21 +35,21 @@ static char HandleViewObservationContext;
 		
 //		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, position.y, 0, 0), -HandleSize - HandlePadding, -HandleSize - HandlePadding)];
 		
-		[self addObserver:self forKeyPath:@"position" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&HandleViewObservationContext];
-		[self addObserver:self forKeyPath:@"type" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&HandleViewObservationContext];
-		[self addObserver:self forKeyPath:@"color" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&HandleViewObservationContext];
+		[self addObserver:self forKeyPath:@"position" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
+		[self addObserver:self forKeyPath:@"type" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
+		[self addObserver:self forKeyPath:@"color" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionInitial) context:&SMHandleViewObservationContext];
     }
     return self;
 }
 
-+ (HandleView*)handleViewWithPosition:(CGPoint)position {
-	return [[[HandleView alloc] initWithPosition:position] autorelease];
++ (SMHandleView*)handleViewWithPosition:(CGPoint)position {
+	return [[[SMHandleView alloc] initWithPosition:position] autorelease];
 }
 
 - (void)dealloc {
-	[self removeObserver:self forKeyPath:@"position" context:&HandleViewObservationContext];
-	[self removeObserver:self forKeyPath:@"type" context:&HandleViewObservationContext];
-	[self removeObserver:self forKeyPath:@"color" context:&HandleViewObservationContext];
+	[self removeObserver:self forKeyPath:@"position" context:&SMHandleViewObservationContext];
+	[self removeObserver:self forKeyPath:@"type" context:&SMHandleViewObservationContext];
+	[self removeObserver:self forKeyPath:@"color" context:&SMHandleViewObservationContext];
 	
 	self.color = nil;
 	
@@ -97,7 +97,7 @@ static char HandleViewObservationContext;
 
 - (void)mouseDown:(NSEvent *)event {
 	
-    id<HandleViewDelegate> delegate = self.delegate;
+    id<SMHandleViewDelegate> delegate = self.delegate;
     NSPoint position = self.position;
     
 	// begin moving
@@ -175,7 +175,7 @@ static char HandleViewObservationContext;
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-    if (context != &HandleViewObservationContext) {
+    if (context != &SMHandleViewObservationContext) {
         [super observeValueForKeyPath:keyPath 
                              ofObject:object 
                                change:change 
