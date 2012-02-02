@@ -13,6 +13,7 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		D40035731262F8380082F08D /* SMHandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035721262F8380082F08D /* SMHandleView.m */; };
 		D40035951262FB250082F08D /* SMCanvas.m in Sources */ = {isa = PBXBuildFile; fileRef = D40035941262FB250082F08D /* SMCanvas.m */; };
+		D40C5D3B14DA848E0093F919 /* HandleViewAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D40C5D3A14DA848D0093F919 /* HandleViewAppDelegate.m */; };
 		D48A7436127810BC00425A67 /* NSColor+CGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A7435127810BC00425A67 /* NSColor+CGColor.m */; };
 		D48A748D12785CC400425A67 /* NSView+HandleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D48A748C12785CC400425A67 /* NSView+HandleView.m */; };
 		D4EA422E14D9561600FE05D9 /* SMGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA422D14D9561600FE05D9 /* SMGeometry.m */; };
@@ -34,6 +35,8 @@
 		D40035721262F8380082F08D /* SMHandleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMHandleView.m; sourceTree = "<group>"; };
 		D40035931262FB250082F08D /* SMCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SMCanvas.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		D40035941262FB250082F08D /* SMCanvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMCanvas.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		D40C5D3914DA848C0093F919 /* HandleViewAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandleViewAppDelegate.h; sourceTree = "<group>"; };
+		D40C5D3A14DA848D0093F919 /* HandleViewAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandleViewAppDelegate.m; sourceTree = "<group>"; };
 		D48A7434127810BC00425A67 /* NSColor+CGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+CGColor.h"; sourceTree = "<group>"; };
 		D48A7435127810BC00425A67 /* NSColor+CGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+CGColor.m"; sourceTree = "<group>"; };
 		D48A748B12785CC400425A67 /* NSView+HandleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+HandleView.h"; sourceTree = "<group>"; };
@@ -71,6 +74,8 @@
 				D4EA422D14D9561600FE05D9 /* SMGeometry.m */,
 				D4EA422F14D9587B00FE05D9 /* NSBezierPath+HandleView.h */,
 				D4EA423014D9587B00FE05D9 /* NSBezierPath+HandleView.m */,
+				D40C5D3914DA848C0093F919 /* HandleViewAppDelegate.h */,
+				D40C5D3A14DA848D0093F919 /* HandleViewAppDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 				D48A748D12785CC400425A67 /* NSView+HandleView.m in Sources */,
 				D4EA422E14D9561600FE05D9 /* SMGeometry.m in Sources */,
 				D4EA423114D9587B00FE05D9 /* NSBezierPath+HandleView.m in Sources */,
+				D40C5D3B14DA848E0093F919 /* HandleViewAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
