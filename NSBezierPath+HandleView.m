@@ -36,8 +36,13 @@
         return;
     }
     
+    // restrict values to valid values
+    headWidth = MIN(length - 10.0f, MAX(20.0f, headWidth));
+    shaftWidth = MIN(headWidth - 10.0f, MAX(10.0f, shaftWidth));
+
+    
     CGPoint n = CGPointNormalize(d);
-    CGPoint o = CGPointOrthogonal(n);
+    CGPoint o = CGPointOrthogonal(n);    
     
     // tail
     [self moveToPoint:CGPointScaleAdd(point2, o, shaftWidth)];

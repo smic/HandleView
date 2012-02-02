@@ -86,11 +86,20 @@
 
 #pragma mark - Handle view delegate
 
-- (void)handleView:(SMHandleView*)handleView didBeginMoving:(CGPoint)position {
-	// hide handles during the move
+//- (void)handleView:(SMHandleView*)handleView didBeginMoving:(CGPoint)position {
+//	// hide handles during the move
+//	[self.handleView1 setHidden:YES];
+//	[self.handleView2 setHidden:YES];
+//    [self.handleView3 setHidden:YES];
+//}
+
+- (BOOL)handleView:(SMHandleView *)handleView shouldChangePosition:(CGPoint)position {
+    // hide handles during the move
 	[self.handleView1 setHidden:YES];
 	[self.handleView2 setHidden:YES];
     [self.handleView3 setHidden:YES];
+
+    return YES;
 }
 
 - (CGPoint)handleView:(SMHandleView*)handleView willChangePosition:(CGPoint)position {
@@ -111,16 +120,7 @@
         
         // set first point of the arrow
         self.point1 = position;
-        
-        // restrict and update arrow head and shaft width
-        CGFloat headWidth = self.headWidth;
-        CGFloat shaftWidth = self.shaftWidth;
-        arrowLength = CGPointDistanceToPoint(self.point1, self.point2);
-        headWidth = MIN(arrowLength - 10.0f, MAX(20.0f, headWidth));
-        shaftWidth = MIN(headWidth - 10.0f, MAX(10.0f, shaftWidth));
-        self.headWidth = headWidth;
-        self.shaftWidth = shaftWidth;
-        
+
     } else if (self.handleView2 == handleView) {
         // set last point by the handle
         position = CGRectClampPoint(self.bounds, position);
@@ -137,16 +137,7 @@
         
         // set last point by the handle
         self.point2 = position;
-        
-        // restrict and update arrow head and shaft width
-        CGFloat headWidth = self.headWidth;
-        CGFloat shaftWidth = self.shaftWidth;
-        arrowLength = CGPointDistanceToPoint(self.point1, self.point2);
-        headWidth = MIN(arrowLength - 10.0f, MAX(20.0f, headWidth));
-        shaftWidth = MIN(headWidth - 10.0f, MAX(10.0f, shaftWidth));
-        self.headWidth = headWidth;
-        self.shaftWidth = shaftWidth;
-        
+                
     } else if (self.handleView3 == handleView) {
         // set width of the arrow head and shaft by the handle
         CGPoint point3 = position;
@@ -174,19 +165,53 @@
         // caluculate the new position over ther getter of point3
         position = self.point3;
     }
+    
+    // update content of the canvas
+    [self setNeedsDisplay:YES];
+    
 	return position;
 }
 
 - (void)handleView:(SMHandleView*)handleView didChangePosition:(CGPoint)position {
-	[self setNeedsDisplay:YES];
-}
-
-- (void)handleView:(SMHandleView*)handleView didEndMoving:(CGPoint)position {
+	if (self.handleView1 == handleView ||
+        self.handleView2 == handleView) {
+        
+        // restrict and update arrow head and shaft width
+        CGFloat headWidth = self.headWidth;
+        CGFloat shaftWidth = self.shaftWidth;
+        CGFloat arrowLength = CGPointDistanceToPoint(self.point1, self.point2);
+        headWidth = MIN(arrowLength - 10.0f, MAX(20.0f, headWidth));
+        shaftWidth = MIN(headWidth - 10.0f, MAX(10.0f, shaftWidth));
+        self.headWidth = headWidth;
+        self.shaftWidth = shaftWidth;
+    }
+    
 	// show handles again after the move
 	[self.handleView1 setHidden:NO];
 	[self.handleView2 setHidden:NO];
     [self.handleView3 setHidden:NO];
 }
+
+//- (void)handleView:(SMHandleView*)handleView didEndMoving:(CGPoint)position {
+//    
+//    if (self.handleView1 == handleView ||
+//        self.handleView2 == handleView) {
+//        
+//        // restrict and update arrow head and shaft width
+//        CGFloat headWidth = self.headWidth;
+//        CGFloat shaftWidth = self.shaftWidth;
+//        CGFloat arrowLength = CGPointDistanceToPoint(self.point1, self.point2);
+//        headWidth = MIN(arrowLength - 10.0f, MAX(20.0f, headWidth));
+//        shaftWidth = MIN(headWidth - 10.0f, MAX(10.0f, shaftWidth));
+//        self.headWidth = headWidth;
+//        self.shaftWidth = shaftWidth;
+//    }
+//    
+//	// show handles again after the move
+//	[self.handleView1 setHidden:NO];
+//	[self.handleView2 setHidden:NO];
+//    [self.handleView3 setHidden:NO];
+//}
 
 #pragma mark - Drawing
 

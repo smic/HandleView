@@ -83,40 +83,42 @@ static char SMHandleViewObservationContext;
     id<SMHandleViewDelegate> delegate = self.delegate;
     NSPoint position = self.position;
     
-	// begin moving
-	if ([delegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
-		[delegate handleView:self didBeginMoving:position];
-	}
-	
-	// test the if the position should be changed
-	if ([delegate respondsToSelector:@selector(handleView:shouldChangePosition:)]) {
-		if (![delegate handleView:self shouldChangePosition:position]) {
-			
-			// end moving
-			if ([delegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
-				[delegate handleView:self didEndMoving:position];
-			}
-			return;
-		}
-	}
-	
 	// bring handle to front
-	[self.superview bringSubviewToFront:self];
-	
-	// set new cursor
-	[[NSCursor closedHandCursor] push];
-	
+    [self.superview bringSubviewToFront:self];
+    
+    // set new cursor
+    [[NSCursor closedHandCursor] push];
+    
 	// current position of the mouse pointer
 	CGPoint currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
 	CGPoint relativePoint = NSMakePoint(position.x - currentPoint.x, position.y - currentPoint.y);
-	
+    CGPoint previousPoint = currentPoint;
+    
 	// waiting for dragging events
+    BOOL moved = NO;
 	while ([event type]!=NSLeftMouseUp) {
 		event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-		
+        
 		// current position of the mouse pointer
 		currentPoint = [self.superview convertPoint:[event locationInWindow] fromView:nil];
-		
+        
+        // do nothing until the current point changed
+        if (CGPointEqualToPoint(currentPoint, previousPoint)) {
+            continue;
+        }
+        
+        // delay calling the delegate until the handle are really moved
+        if (!moved) {
+            // test the if the position should be changed
+            if ([delegate respondsToSelector:@selector(handleView:shouldChangePosition:)]) {
+                if (![delegate handleView:self shouldChangePosition:position]) {
+                    return;
+                }
+            }
+            
+            moved = YES;
+        }
+        
 		position = NSMakePoint(currentPoint.x + relativePoint.x,
                                currentPoint.y + relativePoint.y);
 		
@@ -127,20 +129,19 @@ static char SMHandleViewObservationContext;
 		
 		// set new position
 		self.position = position;
-		
-		// did change position
+        
+        previousPoint = currentPoint;
+	}
+    
+	// restore previous cursor
+	[NSCursor pop];
+	
+    if (moved) {
+        // did change position
 		if ([delegate respondsToSelector:@selector(handleView:didChangePosition:)]) {
 			[delegate handleView:self didChangePosition:position];
 		}
-	}
-	
-	// restore cursor
-	[[NSCursor closedHandCursor] pop];
-	
-	// end moving
-	if ([delegate respondsToSelector:@selector(handleView:didBeginMoving:)]) {
-		[delegate handleView:self didEndMoving:position];
-	}
+    }
 }
 
 // "OpenHand" as standard mouse cursor
@@ -151,6 +152,14 @@ static char SMHandleViewObservationContext;
 }
 
 #pragma mark - KVO
+
+- (NSRect)frameForPosition:(NSPoint)position {
+    return [self alignRectToBase:NSInsetRect(NSMakeRect(position.x, 
+                                                        position.y, 
+                                                        0, 0), 
+                                             -HandleSize, 
+                                             -HandleSize)];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -166,11 +175,7 @@ static char SMHandleViewObservationContext;
     
 	if([keyPath isEqualToString:@"position"]) {
 		// set frame for new position
-		self.frame = [self alignRectToBase:NSInsetRect(NSMakeRect(self.position.x, 
-                                                                  self.position.y, 
-                                                                  0, 0), 
-                                                       -HandleSize, 
-                                                       -HandleSize)];
+		self.frame = [self frameForPosition:self.position];
 	} else if([keyPath isEqualToString:@"special"]) {
 		[self setNeedsDisplay:YES];
 	} else if([keyPath isEqualToString:@"color"]) {
