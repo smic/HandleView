@@ -26,10 +26,8 @@
 @protocol SMHandleViewDelegate <NSObject>
 
 @optional
-- (void)handleView:(SMHandleView *)handleView didBeginMoving:(CGPoint)position;
 - (BOOL)handleView:(SMHandleView *)handleView shouldChangePosition:(CGPoint)position;
 - (CGPoint)handleView:(SMHandleView *)handleView willChangePosition:(CGPoint)position;
 - (void)handleView:(SMHandleView *)handleView didChangePosition:(CGPoint)position;
-- (void)handleView:(SMHandleView *)handleView didEndMoving:(CGPoint)position;
 
 @end
